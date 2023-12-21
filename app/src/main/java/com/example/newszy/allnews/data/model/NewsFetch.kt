@@ -2,10 +2,8 @@ package com.example.newszy.allnews.data.model
 
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.Serializable
 
-@Serializable
-data class EverythingNews(
+data class NewsFetch(
     @SerializedName("articles")
     val articles: List<Article>,
     @SerializedName("status")
