@@ -71,6 +71,9 @@ dependencies {
     //Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
+    //fonts
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.5.4")
+
     //retrofit for api
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
