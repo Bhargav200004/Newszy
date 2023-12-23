@@ -1,5 +1,6 @@
 package com.example.newszy.ui.components
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
@@ -18,10 +19,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DropDownMenu() {
-    val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
+fun DropDownMenu(options : List<String>) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
+    var selectedOptionText by remember { mutableStateOf(options[23]) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -31,19 +31,19 @@ fun DropDownMenu() {
     ) {
         OutlinedTextField(
             modifier = Modifier
-                .width(140.dp)
+                .width(150.dp)
+                .height(65.dp)
                 .menuAnchor(),
             shape = RoundedCornerShape(18.dp),
             readOnly = true,
             value = selectedOptionText,
             onValueChange = { },
-            label = { Text("Label") },
+            label = { Text("Country") },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
         ExposedDropdownMenu(
             expanded = expanded,

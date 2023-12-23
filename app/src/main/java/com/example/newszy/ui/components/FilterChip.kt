@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterChipComponent(label: String, onClick: (String) -> Unit) {
-    var selected by remember { mutableStateOf(false) }
+    var selected by remember { mutableStateOf(false ) }
 
     FilterChip(
         modifier = Modifier
@@ -31,7 +31,8 @@ fun FilterChipComponent(label: String, onClick: (String) -> Unit) {
         onClick = {
             selected = !selected
             onClick(label)
-                  },
+        },
+        elevation = FilterChipDefaults.filterChipElevation(),
         leadingIcon = {
             if (selected) {
                 Icon(
