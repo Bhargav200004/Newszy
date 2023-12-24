@@ -7,10 +7,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CategoryChip(category: List<String> , isSelected : (String) -> Unit) {
+fun CategoryChip(category: List<String> ,selectedCategory : String, onSelectedCategoryChange : (String) -> Unit ) {
+
+
     Text(
         text = "Category",
         style = MaterialTheme.typography.titleSmall
@@ -21,7 +27,11 @@ fun CategoryChip(category: List<String> , isSelected : (String) -> Unit) {
             .horizontalScroll(rememberScrollState())
     ) {
         category.forEach {
-            FilterChipComponent(label = it, onClick = isSelected)
+            FilterChipComponent(
+                category = it,
+                isSelected = selectedCategory == it,
+                onSelectedCategoryChange =onSelectedCategoryChange
+            )
         }
     }
 }

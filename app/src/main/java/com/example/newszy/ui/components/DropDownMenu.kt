@@ -1,5 +1,6 @@
 package com.example.newszy.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,9 +20,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun DropDownMenu(options : List<String>) {
+fun DropDownMenu(options : List<String> , selectedOption : String , onSelectedOptionChange : (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[23]) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -36,7 +36,7 @@ fun DropDownMenu(options : List<String>) {
                 .menuAnchor(),
             shape = RoundedCornerShape(18.dp),
             readOnly = true,
-            value = selectedOptionText,
+            value = selectedOption,
             onValueChange = { },
             label = { Text("Country") },
             trailingIcon = {
@@ -54,9 +54,8 @@ fun DropDownMenu(options : List<String>) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
                     text = { Text(text = selectionOption) },
-                    onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
+                    onClick = { onSelectedOptionChange(selectionOption)
+                    expanded =false
                     }
                 )
             }

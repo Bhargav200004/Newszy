@@ -11,30 +11,26 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterChipComponent(label: String, onClick: (String) -> Unit) {
-    var selected by remember { mutableStateOf(false ) }
+fun FilterChipComponent(
+    category: String,
+    isSelected: Boolean = false,
+    onSelectedCategoryChange: (String) -> Unit) {
 
     FilterChip(
         modifier = Modifier
             .padding(end = 8.dp),
-        selected = selected,
-        label = { Text(text = label) },
-        onClick = {
-            selected = !selected
-            onClick(label)
-        },
+        selected = isSelected,
+        label = { Text(text = category) },
+        onClick = { onSelectedCategoryChange(category) },
         elevation = FilterChipDefaults.filterChipElevation(),
         leadingIcon = {
-            if (selected) {
+            if (isSelected) {
                 Icon(
                     imageVector = Icons.Filled.Done,
                     contentDescription = "Done icon",
