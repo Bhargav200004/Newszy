@@ -178,12 +178,7 @@ fun HomeScreen() {
         )
     )
 
-    val news = listOf(
-        News(articles = article, status = "ok", totalResult = 20),
-        News(articles = article, status = "no", totalResult = 20),
-        News(articles = article, status = "ok", totalResult = 20),
-        News(articles = article, status = "no", totalResult = 20)
-    )
+    val news = News(articles = article, status = "ok", totalResult = 20)
 
 
     Scaffold(
@@ -216,13 +211,11 @@ fun HomeScreen() {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(4/2f)
+                    .aspectRatio(4/2.4f)
             ) {
 
-                news.forEach { new ->
                     //HeadLine Section
-                    headLineSection(new.articles)
-                }
+                headLineSection(news.articles)
             }
             //Main Section
 
