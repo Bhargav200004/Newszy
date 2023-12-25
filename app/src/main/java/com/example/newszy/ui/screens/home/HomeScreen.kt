@@ -1,9 +1,9 @@
 package com.example.newszy.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -216,9 +216,13 @@ fun HomeScreen() {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .aspectRatio(4/2f)
             ) {
-                //HeadLine Section
-                headLineSection(news)
+
+                news.forEach { new ->
+                    //HeadLine Section
+                    headLineSection(new.articles)
+                }
             }
             //Main Section
 
