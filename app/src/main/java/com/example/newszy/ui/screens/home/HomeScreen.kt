@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -20,29 +21,31 @@ import androidx.compose.ui.unit.dp
 import com.example.newszy.ui.components.CategoryChip
 import com.example.newszy.ui.components.headLine.HeadLineTextSection
 import com.example.newszy.ui.components.headLine.headLineSection
+import com.example.newszy.ui.components.mainNewsSection.MainNewsTextSection
 
 
 data class News(
-    val articles : List<Article>,
-    val status : String,
-    val totalResult : Int
+    val articles: List<Article>,
+    val status: String,
+    val totalResult: Int
 )
 
 data class Article(
     val author: String,
     val content: String,
     val description: String,
-    val source : Source
+    val source: Source
 )
 
 data class Source(
     val id: Int,
     val name: String
 )
+
 @Composable
 fun HomeScreen() {
 
-    val category : List<String> = listOf(
+    val category: List<String> = listOf(
         "business",
         "entertainment",
         "general",
@@ -109,10 +112,13 @@ fun HomeScreen() {
         "South Africa"
     )
 
-    var selectedCategory by remember { mutableStateOf("") }
+    var selectedCategoryForHeadLine by remember { mutableStateOf("") }
 
-    var selectedCountryText by remember { mutableStateOf("") }
 
+    var selectedCountryTextForHeadLine by remember { mutableStateOf("") }
+
+
+    var selectedCountryTextForMainNews by remember { mutableStateOf("") }
 
 
     val article = listOf(
@@ -195,29 +201,49 @@ fun HomeScreen() {
             // Category Section
             CategoryChip(
                 category = category,
-                selectedCategory = selectedCategory,
-                onSelectedCategoryChange = { selectedCategory = it }
+                selectedCategory = selectedCategoryForHeadLine,
+                onSelectedCategoryChange = { selectedCategoryForHeadLine = it }
             )
 
-            //HeadLine Text Section
-            HeadLineTextSection(
-                countryNames = countryNames,
-                selectedCountry = selectedCountryText,
-                onSelectedCountryChange = {
-                    selectedCountryText = it
+            LazyColumn {
+
+                item {
+                    //HeadLine Text Section
+                    HeadLineTextSection(
+                        countryNames = countryNames,
+                        selectedCountry = selectedCountryTextForHeadLine,
+                        onSelectedCountryChange = {
+                            selectedCountryTextForHeadLine = it
+                        }
+                    )
                 }
-            )
 
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(4/2.4f)
-            ) {
+                item {
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(3 / 2f)
+                    ) {
+                        //HeadLine Section
+                        headLineSection(news.articles)
+                    }
+                }
 
-                    //HeadLine Section
-                headLineSection(news.articles)
+                //Main Section
+
+                item {
+                    //Headline Text for Main news
+                    MainNewsTextSection(
+                        countryNames = countryNames,
+                        selectedCountry = selectedCountryTextForMainNews,
+                        onSelectedCountryChange = {
+                            selectedCountryTextForMainNews = it
+                        }
+                    )
+                }
+
             }
-            //Main Section
+
 
         }
     }

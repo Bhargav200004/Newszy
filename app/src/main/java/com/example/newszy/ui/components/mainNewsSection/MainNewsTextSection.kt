@@ -1,4 +1,4 @@
-package com.example.newszy.ui.components.headLine
+package com.example.newszy.ui.components.mainNewsSection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.example.newszy.ui.components.DropDownMenu
 
 @Composable
-fun HeadLineTextSection(countryNames: List<String> , selectedCountry  : String , onSelectedCountryChange : (String) -> Unit) {
+fun MainNewsTextSection(countryNames: List<String> , selectedCountry  : String , onSelectedCountryChange : (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -19,7 +19,7 @@ fun HeadLineTextSection(countryNames: List<String> , selectedCountry  : String ,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "HeadLines",
+            text = "News",
             style = MaterialTheme.typography.headlineMedium
         )
         DropDownMenu(
