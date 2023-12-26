@@ -1,8 +1,10 @@
 package com.example.newszy.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,6 +24,7 @@ import com.example.newszy.ui.components.CategoryChip
 import com.example.newszy.ui.components.headLine.HeadLineTextSection
 import com.example.newszy.ui.components.headLine.headLineSection
 import com.example.newszy.ui.components.mainNewsSection.MainNewsTextSection
+import com.example.newszy.ui.components.mainNewsSection.mainNewsCardSectionContent
 
 
 data class News(
@@ -240,7 +243,11 @@ fun HomeScreen() {
                             selectedCountryTextForMainNews = it
                         }
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
+
+                //Main News Card Section
+                mainNewsCardSectionContent(news.articles)
 
             }
 

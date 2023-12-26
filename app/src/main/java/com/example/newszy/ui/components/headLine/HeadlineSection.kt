@@ -105,6 +105,7 @@ private fun HeadLineArticleCardTitleAndDate(
                 .align(Alignment.Start),
             text = title,
             style = TextStyle(
+                fontSize = 17.sp,
                 fontWeight = FontWeight.Bold,
                 shadow = Shadow ( color= Color.Black, blurRadius = 15f )
             ),
