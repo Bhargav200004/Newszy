@@ -3,18 +3,16 @@ package com.example.newszy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.newszy.ui.components.DropDownMenu
-import com.example.newszy.ui.screens.home.HomeScreen
 import com.example.newszy.ui.theme.NewszyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             NewszyTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,9 +20,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+
                 }
             }
         }
     }
 }
+
+

@@ -1,4 +1,4 @@
-package com.example.newszy.allnews.data.model
+package com.example.newszy.model
 
 
 import com.google.gson.annotations.SerializedName
