@@ -1,4 +1,4 @@
-package com.example.newszy.model
+package com.example.newszy.domain.model
 
 
 import com.google.gson.annotations.SerializedName
