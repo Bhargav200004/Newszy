@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -27,18 +29,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.newszy.R
-import com.example.newszy.ui.screens.home.Article
+import com.example.newszy.domain.model.Article
 import com.example.newszy.util.formatDateString
 
 fun LazyListScope.headLineSection(articles: List<Article>) {
-    items(5){
-        HeadLineArticleCard()
+    if (articles.isEmpty()) {
+        item {
+            Image(
+                modifier = Modifier
+                    .fillParentMaxWidth()
+                    .height(280.dp),
+                painter = painterResource(id = R.drawable.nonews),
+                contentDescription = "",
+                contentScale = ContentScale.Fit
+            )
+        }
+    }
+    else{
+        items(articles) { article ->
+            HeadLineArticleCard(article = article)
+        }
     }
 }
 
 
 @Composable
-fun HeadLineArticleCard() {
+fun HeadLineArticleCard(article: Article) {
     ElevatedCard(
         modifier = Modifier
             .padding(10.dp)
@@ -70,8 +86,8 @@ fun HeadLineArticleCard() {
                 contentScale = ContentScale.FillBounds
             )
             HeadLineArticleCardTitleAndDate(
-                title = "Pistons match NBA single-season losing streak record with 26th straight defeat - The Athletic",
-                date = "2023-12-24T18:30:35Z"
+                title = article.title,
+                date = article.publishedAt
             )
 
         }

@@ -10,6 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.example.API
+import com.example.newszy.ui.screens.home.HomeScreen
+import com.example.newszy.ui.screens.home.HomeScreenNavigation
 import com.example.newszy.ui.screens.home.HomeScreenViewModel
 import com.example.newszy.ui.theme.NewszyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    viewModel.test()
+                    HomeScreenNavigation()
                 }
             }
         }
