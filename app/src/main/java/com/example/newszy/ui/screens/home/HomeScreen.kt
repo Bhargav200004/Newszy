@@ -39,25 +39,6 @@ fun HomeScreenNavigation() {
 
 }
 
-
-data class News(
-    val articles: List<Article>,
-    val status: String,
-    val totalResult: Int
-)
-
-    data class Article(
-        val author: String,
-        val content: String,
-        val description: String,
-        val source: Source
-    )
-
-data class Source(
-    val id: Int,
-    val name: String
-)
-
 @Composable
 fun HomeScreen(
     state: HomeScreenState,
@@ -78,7 +59,7 @@ fun HomeScreen(
             CategoryChip(
                 category = state.category,
                 selectedCategory = state.selectedCategory,
-                onSelectedCategoryChange = { onEvent(HomeScreenEvent.OnSelectedHeadlineCountry(it)) }
+                onSelectedCategoryChange = { onEvent(HomeScreenEvent.OnSelectedCategory(it)) }
             )
 
             LazyColumn {
