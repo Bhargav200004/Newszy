@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
@@ -25,6 +27,16 @@ class HomeScreenViewModel @Inject constructor(
         initialValue = HomeScreenState()
     )
 
+    init {
+        getMainCountryNews(
+            category = state.value.selectedCategory
+        )
+        getHeadlineNews(
+            category = state.value.selectedCategory,
+            country = state.value.headlineCountry
+        )
+    }
+
     fun onEvent(event : HomeScreenEvent){
         when(event){
             is HomeScreenEvent.OnSelectedCategory -> {
@@ -33,6 +45,9 @@ class HomeScreenViewModel @Inject constructor(
                         selectedCategory = event.category
                     )
                 }
+                getMainCountryNews(
+                    category = state.value.selectedCategory
+                )
             }
             is HomeScreenEvent.OnSelectedHeadlineCountry -> {
                 _state.update { homeScreenState->
@@ -40,22 +55,57 @@ class HomeScreenViewModel @Inject constructor(
                         headlineCountry = event.country
                     )
                 }
+                getHeadlineNews(
+                    category = state.value.selectedCategory,
+                    country = state.value.headlineCountry
+                )
             }
             is HomeScreenEvent.OnSelectedMainNewsCountry -> {
-                _state.update { homeScreenState->
+                 _state.update { homeScreenState->
                     homeScreenState.copy(
                         mainNewsCountry = event.country
-
                     )
                 }
-                country(state.value.mainNewsCountry)
             }
         }
     }
 
-    private fun country(mainNewsCountry: String) {
-        val country = HomeScreenState.getCountry(mainNewsCountry)
-        Log.d("countryCode" , "countryCode = $country")
+    private fun getHeadlineNews(category: String , country: String) {
+        val headlineCategory  = HomeScreenState.getCategory(category)
+        val headlineCountry = HomeScreenState.getCountry(country)
+        viewModelScope.launch {
+            try {
+                val state = newsRepositoryImpl.getHeadlines(country = headlineCountry.toString() , category = headlineCategory.toString())
+                _state.update {homeScreenState ->
+                    homeScreenState.copy(
+                     headlineArticle = state.articles
+                    )
+                }
+            }
+            catch(e : Exception) {
+                Log.d("headlineNewsError", "${e.message}")
+            }
+        }
+
+    }
+
+    private fun getMainCountryNews(category : String) {
+        val mainCategory = HomeScreenState.getCategory(category)
+        viewModelScope.launch {
+            try {
+                val state = newsRepositoryImpl.getEveryThing(q = mainCategory.toString())
+                _state.update {homeScreenState->
+                    homeScreenState.copy(
+                        mainNewsArticle = state.articles
+                    )
+                }
+            }
+            catch (e : Exception){
+                Log.e("getMainCountryError =" , "${e.message}")
+            }
+
+
+        }
     }
 
 }

@@ -28,6 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.newszy.R
 import com.example.newszy.domain.model.Article
 import com.example.newszy.util.formatDateString
@@ -77,14 +78,18 @@ fun HeadLineArticleCard(article: Article) {
                 .background(Color.White)
                 .clickable {},
         ){
-//            AsyncImage(model = articles., contentDescription = )
-            Image(
-                modifier = Modifier
-                    .fillMaxSize(),
-                painter = painterResource(id =R.drawable.test) ,
-                contentDescription = "back ground image",
+            AsyncImage(
+                model = article.urlToImage,
+                contentDescription = "Image",
                 contentScale = ContentScale.FillBounds
             )
+//            Image(
+//                modifier = Modifier
+//                    .fillMaxSize(),
+//                painter = painterResource(id =R.drawable.test) ,
+//                contentDescription = "back ground image",
+//                contentScale = ContentScale.FillBounds
+//            )
             HeadLineArticleCardTitleAndDate(
                 title = article.title,
                 date = article.publishedAt
@@ -118,7 +123,8 @@ private fun HeadLineArticleCardTitleAndDate(
         )
         Text(
             modifier = Modifier
-                .align(Alignment.Start),
+                .align(Alignment.Start)
+                .background(Color.Transparent.copy(alpha = 0.25f)),
             text = title,
             style = TextStyle(
                 fontSize = 17.sp,

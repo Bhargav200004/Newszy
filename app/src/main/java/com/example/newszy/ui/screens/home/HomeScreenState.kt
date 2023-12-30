@@ -3,16 +3,19 @@ package com.example.newszy.ui.screens.home
 import com.example.newszy.domain.model.Article
 
 data class HomeScreenState(
+    val title : String = "",
+    val content : String = "",
     val headlineArticle : List<Article>  = emptyList(),
     val mainNewsArticle : List<Article>  = emptyList(),
     val countryList : List<String> = getListOfCountry(),
-    val headlineCountry : String = "",
+    val headlineCountry : String = "India",
     val mainNewsCountry : String = "",
     val category : List<String> = getListOfCategory(),
-    val selectedCategory : String = ""
+    val selectedCategory : String = Category.ENTERTAINMENT.toString()
 
 ){
     companion object{
+
         fun getListOfCountry() : List<String>{
             return listOf(
                 "United Arab Emirates",
@@ -74,6 +77,11 @@ data class HomeScreenState(
 
         fun getCountry(value: String) : Country?{
             val map = Country.entries.associateBy( Country::value)
+            return map[value]
+        }
+
+        fun getCategory(value: String) : Category?{
+            val map = Category.entries.associateBy(Category::value)
             return map[value]
         }
 
@@ -158,3 +166,6 @@ enum class Category(val value: String){
     SPORTS("SPORTS"),
     TECHNOLOGY("TECHNOLOGY")
 }
+
+//391
+//332

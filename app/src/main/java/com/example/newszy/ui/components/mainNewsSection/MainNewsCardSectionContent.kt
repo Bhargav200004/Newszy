@@ -4,11 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedCard
@@ -23,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.newszy.R
 import com.example.newszy.domain.model.Article
 
@@ -42,24 +41,27 @@ fun LazyListScope.mainNewsCardSectionContent(articles: List<Article>) {
     }
     else{
         items(articles) { article ->
-            MainNewsCardSectionContentCard(
-                title = article.title,
-                content = article.content
-            )
+            MainNewsCardSectionContentCard(article = article)
         }
     }
 }
 
 @Composable
-private fun MainNewsCardSectionContentCard(title :String , content : String?) {
+private fun MainNewsCardSectionContentCard(article: Article) {
     ElevatedCard{
         Column {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth(),
-                painter = painterResource(id = R.drawable.test),
-                contentDescription = ""
+                model = article.urlToImage,
+                contentDescription = "Image"
             )
+//            Image(
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                painter = painterResource(id = R.drawable.test),
+//                contentDescription = ""
+//            )
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -70,24 +72,15 @@ private fun MainNewsCardSectionContentCard(title :String , content : String?) {
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = title,
+                        text = article.title,
                         textDecoration = TextDecoration.Underline
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    if (content != null) {
-                        Text(
-                            text = content,
-                            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
-                            color = Color.Gray
-                        )
-                    }
-                    else{
-                        Text(
-                            text = "There is no content",
-                            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
-                            color = Color.Gray
-                        )
-                    }
+                    Text(
+                        text = article.content ?: "Not Available",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
+                        color = Color.Gray
+                    )
                 }
 
             }
