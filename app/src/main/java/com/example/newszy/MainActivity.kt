@@ -7,17 +7,11 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.example.API
-import com.example.newszy.ui.screens.home.HomeScreen
 import com.example.newszy.ui.screens.home.HomeScreenNavigation
 import com.example.newszy.ui.screens.home.HomeScreenViewModel
 import com.example.newszy.ui.theme.NewszyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Retrofit
-import retrofit2.create
-import retrofit2.http.GET
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

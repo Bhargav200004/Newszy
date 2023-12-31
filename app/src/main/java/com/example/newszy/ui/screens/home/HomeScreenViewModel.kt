@@ -1,5 +1,8 @@
 package com.example.newszy.ui.screens.home
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +15,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
@@ -35,6 +37,7 @@ class HomeScreenViewModel @Inject constructor(
             category = state.value.selectedCategory,
             country = state.value.headlineCountry
         )
+
     }
 
     fun onEvent(event : HomeScreenEvent){
@@ -67,7 +70,25 @@ class HomeScreenViewModel @Inject constructor(
                     )
                 }
             }
+
+            is HomeScreenEvent.OnSelectedCard -> {
+                _state.update {homeScreenState ->
+                    homeScreenState.copy(
+                        url = event.uri
+                    )
+                }
+                goToUrl(
+                    context = event.context,
+                    url = state.value.url
+                )
+            }
         }
+    }
+
+    private fun goToUrl(context: Context , url: String) {
+        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        context.startActivity(webIntent)
+
     }
 
     private fun getHeadlineNews(category: String , country: String) {

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,7 +27,7 @@ import com.example.newszy.R
 import com.example.newszy.domain.model.Article
 
 
-fun LazyListScope.mainNewsCardSectionContent(articles: List<Article>) {
+fun LazyListScope.mainNewsCardSectionContent(articles: List<Article> , onCardSelected : (String) -> Unit) {
     if (articles.isEmpty()) {
         item {
             Image(
@@ -41,14 +42,19 @@ fun LazyListScope.mainNewsCardSectionContent(articles: List<Article>) {
     }
     else{
         items(articles) { article ->
-            MainNewsCardSectionContentCard(article = article)
+            MainNewsCardSectionContentCard(article = article , onCardSelected = onCardSelected)
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun MainNewsCardSectionContentCard(article: Article) {
-    ElevatedCard{
+private fun MainNewsCardSectionContentCard(article: Article  , onCardSelected : (String) -> Unit) {
+    ElevatedCard(
+        onClick = {
+            onCardSelected((article.url))
+        }
+    ){
         Column {
             AsyncImage(
                 modifier = Modifier

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +7,10 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
 }
+
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.example.newszy"
@@ -21,6 +27,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
     }
 
     buildTypes {
@@ -40,6 +48,7 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {

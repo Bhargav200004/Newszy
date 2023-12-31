@@ -1,10 +1,12 @@
 package com.example.newszy.ui.screens.home
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 import com.example.newszy.domain.model.Article
 
 data class HomeScreenState(
-    val title : String = "",
-    val content : String = "",
+    val url : String = "",
+    val context: Context? = null,
     val headlineArticle : List<Article>  = emptyList(),
     val mainNewsArticle : List<Article>  = emptyList(),
     val countryList : List<String> = getListOfCountry(),

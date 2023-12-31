@@ -1,5 +1,6 @@
 package com.example.newszy.ui.screens.home
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -16,6 +17,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,6 +46,8 @@ fun HomeScreen(
     state: HomeScreenState,
     onEvent : (HomeScreenEvent) -> Unit
 ) {
+
+    val context : Context = LocalContext.current
     Scaffold(
         topBar = {
             HomeScreenTopBar()
@@ -80,7 +84,9 @@ fun HomeScreen(
                             .aspectRatio(3 / 2f)
                     ) {
                         //HeadLine Section
-                        headLineSection(articles = state.headlineArticle)
+                        headLineSection(articles = state.headlineArticle , onCardSelected = {
+                            onEvent(HomeScreenEvent.OnSelectedCard(uri = it , context = context))
+                        })
                     }
                 }
 
@@ -97,7 +103,9 @@ fun HomeScreen(
                 }
 
                 //Main News Card Section
-                mainNewsCardSectionContent(articles = state.mainNewsArticle)
+                mainNewsCardSectionContent(articles = state.mainNewsArticle , onCardSelected = {
+                    onEvent(HomeScreenEvent.OnSelectedCard(uri = it , context = context))
+                })
 
             }
 

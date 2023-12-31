@@ -1,6 +1,7 @@
 package com.example.newszy.di
 
 import com.example.newszy.network.ApiService
+import com.example.newszy.util.Constant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ object NetworkModule {
     fun provideRetrofit() : Retrofit{
         return Retrofit
             .Builder()
-            .baseUrl("https://newsapi.org/v2/")
+            .baseUrl(Constant.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

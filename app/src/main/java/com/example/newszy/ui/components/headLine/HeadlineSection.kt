@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +34,7 @@ import com.example.newszy.R
 import com.example.newszy.domain.model.Article
 import com.example.newszy.util.formatDateString
 
-fun LazyListScope.headLineSection(articles: List<Article>) {
+fun LazyListScope.headLineSection(articles: List<Article> , onCardSelected : (String) -> Unit) {
     if (articles.isEmpty()) {
         item {
             Image(
@@ -48,14 +49,15 @@ fun LazyListScope.headLineSection(articles: List<Article>) {
     }
     else{
         items(articles) { article ->
-            HeadLineArticleCard(article = article)
+            HeadLineArticleCard(article = article , onCardSelected = onCardSelected)
         }
     }
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HeadLineArticleCard(article: Article) {
+fun HeadLineArticleCard(article: Article , onCardSelected : (String) -> Unit) {
     ElevatedCard(
         modifier = Modifier
             .padding(10.dp)
@@ -76,7 +78,9 @@ fun HeadLineArticleCard(article: Article) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
-                .clickable {},
+                .clickable {
+                    onCardSelected(article.url)
+                },
         ){
             AsyncImage(
                 model = article.urlToImage,
