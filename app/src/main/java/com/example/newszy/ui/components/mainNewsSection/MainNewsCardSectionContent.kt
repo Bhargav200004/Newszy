@@ -18,11 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.newszy.R
 import com.example.newszy.domain.model.Article
 
@@ -50,6 +52,11 @@ fun LazyListScope.mainNewsCardSectionContent(articles: List<Article> , onCardSel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MainNewsCardSectionContentCard(article: Article  , onCardSelected : (String) -> Unit) {
+    val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .data(data = article.urlToImage)
+        .crossfade(true)
+        .build()
+
     ElevatedCard(
         onClick = {
             onCardSelected((article.url))
@@ -59,7 +66,7 @@ private fun MainNewsCardSectionContentCard(article: Article  , onCardSelected : 
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth(),
-                model = article.urlToImage,
+                model = imageRequest,
                 contentDescription = "Image"
             )
 //            Image(

@@ -24,15 +24,18 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.newszy.R
 import com.example.newszy.domain.model.Article
 import com.example.newszy.util.formatDateString
+import okhttp3.internal.wait
 
 fun LazyListScope.headLineSection(articles: List<Article> , onCardSelected : (String) -> Unit) {
     if (articles.isEmpty()) {
@@ -55,9 +58,13 @@ fun LazyListScope.headLineSection(articles: List<Article> , onCardSelected : (St
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeadLineArticleCard(article: Article , onCardSelected : (String) -> Unit) {
+    val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .data(data =article.urlToImage )
+        .crossfade(true)
+        .build()
+
     ElevatedCard(
         modifier = Modifier
             .padding(10.dp)
@@ -83,7 +90,7 @@ fun HeadLineArticleCard(article: Article , onCardSelected : (String) -> Unit) {
                 },
         ){
             AsyncImage(
-                model = article.urlToImage,
+                model = imageRequest ,
                 contentDescription = "Image",
                 contentScale = ContentScale.FillBounds
             )
@@ -139,5 +146,3 @@ private fun HeadLineArticleCardTitleAndDate(
         )
     }
 }
-
-
